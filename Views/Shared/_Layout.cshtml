@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Finance request</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <main role="main" />
+    <header>
+        <section>
+            <div class="container d-flex flex-row-reverse"><img class="img-fluid text-right" src="~/Content/images/logo.png" aria-label="Microgaming logo" title="Microgaming logo" /></div>
+        </section>
+        <section class="main-nav d-print-none sticky-top">
+            <div class="container p-0">
+                <nav class="navbar navbar-expand-lg py-0 px-0">
+                    <button class="navbar-toggler my-2 mr-2 ml-auto" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
+                        MENU <i class="fa fa-bars"></i>
+                    </button>
+                    <div class="collapse navbar-collapse d-lg-flex align-self-stretch" id="navbarNavDropdown">
+                        <ul class="navbar-nav align-self-stretch align-content-lg-start">
+                            <li class="nav-item h-100">@Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })</li>
+                        </ul>
+                        <span>@Html.Partial("_LoginPartial")</span>
+                    </div>
+                </nav>
+            </div>
+        </section>
+    </header>
+    <section class="container body-content">
+        @RenderBody()
+    </section>
+    <section class="container">
+        <hr />
+        <footer>
+            <div class="col-12 mt-4 small text-center footer-legal">
+                &copy; Microgaming 2014–2019. All rights reserved.<br />Apricot Investments Limited is licensed and regulated by the <br /><a rel="noopener noreferrer" href="http://www.gamblingcommission.gov.uk/home.aspx" target="_blank">UK Gambling Commission</a>,
+                licence number <a rel="noopener noreferrer" href="https://secure.gamblingcommission.gov.uk/PublicRegister/Search/Detail/39073" target="_blank">39073</a>.
+            </div>
+        </footer>
+    </section>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

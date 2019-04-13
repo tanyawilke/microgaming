@@ -1,0 +1,131 @@
+﻿:root {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #02151c;
+    overflow-y: auto;
+    overflow-x: hidden;
+    color: #FFF;
+    font-family: Verdana, Geneva, Helvetica, sans-serif;
+}
+
+.logo {
+    float: right;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+    margin: 20px 0;
+}
+
+h1, .h1 {
+    font-size: 2.5rem;
+}
+
+.container .navbar {
+    background-color: #054358;
+}
+    
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding: 15px 15px 30px 15px;
+    background-color: transparent;
+}
+
+.navbar-toggler {
+    border: 1px solid #FFF;
+    background-color: #FFF;
+}
+
+.icon-bar {
+    background-color: #054358;
+}
+
+.navbar-brand {
+    color: #FFF;
+}
+
+.navbar-header {
+    margin-left: 0;
+}
+
+.navbar-nav > li > a {
+    color: #FFF;
+}
+
+.navbar-nav > li > a:hover,
+nav-link:hover {
+    color: #FFF;
+    font-weight: 400;
+    text-decoration: underline;
+}
+
+.fa .fa-bars {
+    color: #000;
+    border: 1px solid #000;
+    text-shadow: 3px 6px rgba(255,165,0,.75)
+}
+
+.fa .fa-question-circle-o {
+    color: #000;
+    border: 1px solid #000;
+    text-shadow: 3px 6px rgba(255,165,0,.75)
+}
+
+hr {
+    border: 1px solid #FFF;
+    color: #FFF;
+}
+
+.tooltip-inner {
+    max-width: 200px;
+    padding: 3px 8px;
+    color: #000;
+    text-align: center;
+    background-color: #FFF;
+    border-radius: .25rem;
+}
+
+.tooltip.bs-tooltip-auto[x-placement^=left] .arrow::before, .tooltip.bs-tooltip-left .arrow::before {
+    right: 0;
+    margin-top: -3px;
+    content: "";
+    border-width: 5px 0 5px 5px;
+    border-left-color: #FFF;
+}
+
+.tooltip.bs-tooltip-auto[x-placement^=right] .arrow::before, .tooltip.bs-tooltip-right .arrow::before {
+    margin-top: -3px;
+    content: "";
+    border-width: 5px 5px 5px 0;
+    border-right-color: #FFF;
+}
+
+.navbar-nav > li > a:hover {
+    color: #054358;
+}
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+footer .logo-light-grey {
+    background-image: url('images/logo_lighgrey.svg');
+}
+
+.alert {
+    margin: 20px 00;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}

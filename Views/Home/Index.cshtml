@@ -1,0 +1,80 @@
+﻿@model Microgaming.Models.RequestModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1>Request finance</h1>
+
+<p>Complete the form below to request financial help on behalf of a charity of your choice.</p>
+@if (TempData["notice"] != null)
+{
+    <div class="alert alert-secondary">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        @TempData["notice"]
+    </div>
+}
+
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label m-1" })
+            @Html.TextBoxFor(model => model.Title, "", new { @class = "form-control col-md-6" })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label m-1" })
+            @Html.TextAreaFor(model => model.Description, 5, 100, new { @class = "form-control col-md-6", TextBoxMode = "MultiLine" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Charity, htmlAttributes: new { @class = "control-label m-1" })
+            @Html.TextAreaFor(model => model.Charity, 5, 100, new { @class = "form-control col-md-6", TextBoxMode = "MultiLine" })
+            @Html.ValidationMessageFor(model => model.Charity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.PlayItForward, htmlAttributes: new { @class = "control-label m-1" })
+            @Html.CheckBoxFor(model => model.PlayItForward)
+            @Html.ValidationMessageFor(model => model.PlayItForward, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label m-1" })
+            @Html.TextBoxFor(model => model.Amount, "", new { @class = "form-control col-md-6" })
+            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="control-label col-md-10"></p>
+    </div>
+    <div class="form-control-file">
+        @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label m-1" })<a href="#" data-toggle="tooltip" data-placement="right" title="Upload 1 or more files. Only PDF documents and images (.jpg | .jpeg | .png) may be uploaded"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple" })
+            @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 text-success">
+            @ViewBag.UploadStatus
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Upload" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
