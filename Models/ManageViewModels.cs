@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
@@ -17,7 +19,7 @@ namespace Microgaming.Models
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }
-        public IList<AuthenticationDescription> OtherLogins { get; set; }
+        // public IList<AuthenticationDescription> OtherLogins { get; set; }
     }
 
     public class FactorViewModel
@@ -83,4 +85,51 @@ namespace Microgaming.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
-}
+
+    public class RequestModel
+    {
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Please provide a title.")]
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        [Required(ErrorMessage = "Please provide a description.")]
+        [Display(Name = "Description")]
+        [DataType(DataType.MultilineText)]
+        public string Description { get; set; }
+
+        [Required(ErrorMessage = "Please provide a charity.")]
+        [Display(Name = "Charity")]
+        [DataType(DataType.MultilineText)]
+        public string Charity { get; set; }
+
+        [Required(ErrorMessage = "Previously supported by PlayItForward?")]
+        [Display(Name = "PlayItForward")]
+        public bool PlayItForward { get; set; }
+
+        [Required(ErrorMessage = "Please provide a charity.")]
+        [Display(Name = "Amount")]
+        [DataType(DataType.Currency)]
+        public decimal Amount { get; set; }
+
+        [Required(ErrorMessage = "Please select a file to upload.")]
+        [Display(Name = "Browse file(s)")]
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase[] files { get; set; }
+
+        StatusModel Status { get; set; }
+
+        [DataType(DataType.Date)]
+        public Nullable<DateTime> SubmissionDate { get; set; }
+
+        [DataType(DataType.Date)]
+        public Nullable<DateTime> ModifyDate { get; set; }
+
+    }
+
+    public class StatusModel
+    {
+        public int Id { get; set;  }
+        public string Description { get; set; }
+    }

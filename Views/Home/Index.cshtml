@@ -1,31 +1,80 @@
-﻿@{
+﻿@model Microgaming.Models.RequestModel
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<h1>Request finance</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<p>Complete the form below to request financial help on behalf of a charity of your choice.</p>
+@if (TempData["notice"] != null)
+{
+    <div class="alert alert-secondary">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        @TempData["notice"]
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+}
+
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label m-1" })
+            @Html.TextBoxFor(model => model.Title, "", new { @class = "form-control col-md-6" })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label m-1" })
+            @Html.TextAreaFor(model => model.Description, 5, 100, new { @class = "form-control col-md-6", TextBoxMode = "MultiLine" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Charity, htmlAttributes: new { @class = "control-label m-1" })
+            @Html.TextAreaFor(model => model.Charity, 5, 100, new { @class = "form-control col-md-6", TextBoxMode = "MultiLine" })
+            @Html.ValidationMessageFor(model => model.Charity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.PlayItForward, htmlAttributes: new { @class = "control-label m-1" })
+            @Html.CheckBoxFor(model => model.PlayItForward)
+            @Html.ValidationMessageFor(model => model.PlayItForward, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label m-1" })
+            @Html.TextBoxFor(model => model.Amount, "", new { @class = "form-control col-md-6" })
+            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="control-label col-md-10"></p>
+    </div>
+    <div class="form-control-file">
+        @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label m-1" })<a href="#" data-toggle="tooltip" data-placement="right" title="Upload 1 or more files. Only PDF documents and images (.jpg | .jpeg | .png) may be uploaded"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple" })
+            @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 text-success">
+            @ViewBag.UploadStatus
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Upload" class="btn btn-primary" />
+        </div>
     </div>
 </div>
+}

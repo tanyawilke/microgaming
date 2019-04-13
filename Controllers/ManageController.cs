@@ -295,7 +295,7 @@ namespace Microgaming.Controllers
             return View(new ManageLoginsViewModel
             {
                 CurrentLogins = userLogins,
-                OtherLogins = otherLogins
+                // OtherLogins = otherLogins
             });
         }
 
