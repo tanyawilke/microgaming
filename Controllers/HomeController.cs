@@ -148,8 +148,8 @@ namespace FinanceRequest.Controllers
                 request.Amount = Convert.ToDecimal(requestForm["Amount"].Replace(".", ","));
                 request.SubmissionDate = DateTime.Today;
                 request.ModifyDate = DateTime.Today;
-                //request.User = authUser;
-                request.Status_Id = 1;
+                // request.User = authUser;
+                request.StatusId = 1;
                 request.ConfirmationCode = Guid.NewGuid().ToString().Substring(0, 9);
 
                 db.Request.Add(request);
@@ -162,7 +162,7 @@ namespace FinanceRequest.Controllers
 
                     if (requestId != 0)
                     {
-                        AttachmentModel attachment = new AttachmentModel();
+                        AttachmentModel requestAttachment = new AttachmentModel();
 
                         TempData["notice"] = "File(s) saved.";
                         bool fileIsTooLarge = false;
@@ -196,27 +196,22 @@ namespace FinanceRequest.Controllers
                                 {
                                     try
                                     {
-                                        attachment.RequestId = requestId;
-                                        attachment.File = Path.GetFileName(file.FileName);
+                                        requestAttachment.RequestId = requestId;
+                                        requestAttachment.File = Path.GetFileName(file.FileName);
 
-                                        //var InputFileName = Path.GetFileName(file.FileName);
-                                        //var ServerSavePath = Path.Combine(Server.MapPath("/UploadedFiles") + InputFileName);
+                                        db.Attachment.Add(requestAttachment);
 
-                                        //Save file to server folder  
-                                        //file.SaveAs(ServerSavePath);
-                                        //assigning file uploaded status to ViewBag for showing message to user.  
-                                        // ViewBag.UploadStatus = files.Count().ToString() + " file(s) uploaded.";
                                         TempData["notice"] = upload.Count().ToString() + " file(s) uploaded.";
                                     }
                                     catch (Exception ex)
                                     {
                                         TempData["notice"] = ex.Message.ToString();
                                     }
-                                }
+                                }                                
                             }
-                        }
 
-                        db.SaveChanges();
+                            db.SaveChanges();
+                        }                        
 
                         //string callbackUrl = SendEmailConfirmationTokenAsync(authUser, requestId, "Confirm your request.");
 

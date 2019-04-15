@@ -75,8 +75,8 @@ namespace FinanceRequest.Models
         [DataType(DataType.Currency)]
         public decimal Amount { get; set; }
 
-        public int Status_Id { get; set; }
-        [ForeignKey(nameof(Status_Id))]
+        public int StatusId { get; set; }
+        [ForeignKey(nameof(StatusId))]
         public virtual StatusModel Status { get; set; }
 
         [Display(Name = "Last modified date")]
@@ -89,10 +89,9 @@ namespace FinanceRequest.Models
         [DataType(DataType.Date)]
         public DateTime? ModifyDate { get; set; }
 
-        public string User { get; set; }
-
-        [ForeignKey(nameof(User))]
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        //public string User { get; set; }
+        //[ForeignKey(nameof(User))]
+        //public virtual ApplicationUser ApplicationUser { get; set; }
 
         [MaxLength(10)]
         public string ConfirmationCode { get; set; }
