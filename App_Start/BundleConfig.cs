@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace Microgaming
+namespace FinanceRequest
 {
     public class BundleConfig
     {
@@ -24,7 +24,6 @@ namespace Microgaming
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/fontawesome.css",
                       "~/Content/site.css"));
         }
     }

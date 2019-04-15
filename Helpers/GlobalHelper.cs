@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Management;
 
-namespace Microgaming.Helpers
+namespace FinanceRequest.Helpers
 {
     public class GlobalHelper
     {

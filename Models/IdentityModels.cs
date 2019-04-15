@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Microgaming.Models
+namespace FinanceRequest.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
@@ -29,5 +29,10 @@ namespace Microgaming.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<FinanceRequest.Models.RequestModel> Request { get; set; }
+        public DbSet<FinanceRequest.Models.StatusModel> Status { get; set; }
+
+        public DbSet<FinanceRequest.Models.AttachmentModel> Attachment { get; set; }
     }
 }

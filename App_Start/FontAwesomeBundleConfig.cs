@@ -1,8 +1,8 @@
 using System.Web.Optimization;
 
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(Microgaming.App_Start.FontAwesomeBundleConfig), "RegisterBundles")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(FinanceRequest.App_Start.FontAwesomeBundleConfig), "RegisterBundles")]
 
-namespace Microgaming.App_Start
+namespace FinanceRequest.App_Start
 {
 	public class FontAwesomeBundleConfig
 	{
