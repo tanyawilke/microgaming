@@ -26,7 +26,7 @@
                         <ul class="navbar-nav align-self-stretch align-content-lg-start">
                             <li class="nav-item h-100">@Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })</li>
                         </ul>
-                        <span>@Html.Partial("_LoginPartial")</span>
+                        @Html.Partial("_LoginPartial")
                     </div>
                 </nav>
             </div>
