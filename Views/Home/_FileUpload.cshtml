@@ -1,43 +1,13 @@
-﻿@model Microgaming.Models.FileModel
-
-<h2>Upload files</h2>
-<p>Upload 1 or more files.  You can either select individual files or multiple files for upload.</p>
-<p>Note that only PDF documents and images (.jpg | .jpeg | .png) may be uploaded.</p>
-
-@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @if (TempData["notice"] != null)
-        {
-            <div class="alert alert-danger fade in">
-                <a href="#" class="close" data-dismiss="alert">&times;</a>
-                @TempData["notice"]
-            </div>
-        }
-        <div class="form-group">
-            @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple" })
-                @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Upload" class="btn btn-primary" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 text-success">
-                @ViewBag.UploadStatus
-            </div>
-        </div>
+﻿@model FinanceRequest.Models.AttachmentModel
+<div class="form-control-file">
+    @Html.LabelFor(model => model.File, htmlAttributes: new { @class = "control-label m-1" })<a href="#" data-toggle="tooltip" data-placement="right" title="Upload 1 or more files. Only PDF documents and images (.jpg | .jpeg | .png) may be uploaded"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+    <div class="col-md-10">
+        @Html.TextBoxFor(model => model.File, "", new { @type = "file", @multiple = "multiple", @Name = "upload" })
+        @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10 text-success">
+        @ViewBag.UploadStatus
+    </div>
 </div>

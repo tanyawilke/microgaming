@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace Microgaming.Models
+namespace FinanceRequest.Models
 {
     public class IndexViewModel
     {
@@ -19,7 +20,7 @@ namespace Microgaming.Models
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }
-        // public IList<AuthenticationDescription> OtherLogins { get; set; }
+        public IList<AuthenticationDescription> OtherLogins { get; set; }
     }
 
     public class FactorViewModel
@@ -39,51 +40,6 @@ namespace Microgaming.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-    }
-
-    public class ChangePasswordViewModel
-    {
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
-        public string OldPassword { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "New password")]
-        public string NewPassword { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
-    }
-
-    public class AddPhoneNumberViewModel
-    {
-        [Required]
-        [Phone]
-        [Display(Name = "Phone Number")]
-        public string Number { get; set; }
-    }
-
-    public class VerifyPhoneNumberViewModel
-    {
-        [Required]
-        [Display(Name = "Code")]
-        public string Code { get; set; }
-
-        [Required]
-        [Phone]
-        [Display(Name = "Phone Number")]
-        public string PhoneNumber { get; set; }
-    }
-
-    public class ConfigureTwoFactorViewModel
-    {
-        public string SelectedProvider { get; set; }
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
 
     public class RequestModel
@@ -108,28 +64,59 @@ namespace Microgaming.Models
         [Display(Name = "PlayItForward")]
         public bool PlayItForward { get; set; }
 
+        public RequestModel()
+        {
+            Amount = Convert.ToDecimal(0.00);
+        }
+
+        [Range(1, double.MaxValue, ErrorMessage = "Please enter valid amount.")]
         [Required(ErrorMessage = "Please provide a charity.")]
         [Display(Name = "Amount")]
         [DataType(DataType.Currency)]
         public decimal Amount { get; set; }
 
-        [Required(ErrorMessage = "Please select a file to upload.")]
-        [Display(Name = "Browse file(s)")]
-        [DataType(DataType.Upload)]
-        public HttpPostedFileBase[] files { get; set; }
+        public int StatusId { get; set; }
+        [ForeignKey(nameof(StatusId))]
+        public virtual StatusModel Status { get; set; }
 
-        StatusModel Status { get; set; }
-
+        [Display(Name = "Last modified date")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        public Nullable<DateTime> SubmissionDate { get; set; }
+        public DateTime? SubmissionDate { get; set; }
 
+        [Display(Name = "Last modified date")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        public Nullable<DateTime> ModifyDate { get; set; }
+        public DateTime? ModifyDate { get; set; }
+
+        //public string User { get; set; }
+        //[ForeignKey(nameof(User))]
+        //public virtual ApplicationUser ApplicationUser { get; set; }
+
+        [MaxLength(10)]
+        public string ConfirmationCode { get; set; }
 
     }
 
     public class StatusModel
     {
-        public int Id { get; set;  }
+        public int Id { get; set; }
         public string Description { get; set; }
     }
+
+    public class AttachmentModel
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
+        public int Id { get; set; }
+        [StringLength(400)]
+        [Required(ErrorMessage = "Please select a file to upload.")]
+        [Display(Name = "Browse file(s)")]
+        [DataType(DataType.Upload)]
+        public string File { get; set; }
+        public int RequestId { get; set; }
+        [ForeignKey(nameof(RequestId))]
+        public virtual RequestModel Request { get; set; }
+    }
+}

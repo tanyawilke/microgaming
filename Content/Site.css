@@ -29,7 +29,7 @@ h1, .h1 {
 .container .navbar {
     background-color: #054358;
 }
-    
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding: 15px 15px 30px 15px;
@@ -57,12 +57,12 @@ h1, .h1 {
     color: #FFF;
 }
 
-.navbar-nav > li > a:hover,
-nav-link:hover {
-    color: #FFF;
-    font-weight: 400;
-    text-decoration: underline;
-}
+    .navbar-nav > li > a:hover,
+    nav-link:hover {
+        color: #FFF;
+        font-weight: 400;
+        text-decoration: underline;
+    }
 
 .fa .fa-bars {
     color: #000;
@@ -120,7 +120,7 @@ footer .logo-light-grey {
 }
 
 .alert {
-    margin: 20px 00;
+    margin: 20px 0;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */

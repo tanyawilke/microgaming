@@ -1,4 +1,4 @@
-﻿@model Microgaming.Models.RequestModel
+﻿@model FinanceRequest.Models.RequestModel
 @{
     ViewBag.Title = "Home Page";
 }
@@ -56,24 +56,10 @@
             @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
         </div>
     </div>
+    @Html.Partial("~/Views/Home/_FileUpload.cshtml")
     <div class="form-group">
-        <p class="control-label col-md-10"></p>
-    </div>
-    <div class="form-control-file">
-        @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label m-1" })<a href="#" data-toggle="tooltip" data-placement="right" title="Upload 1 or more files. Only PDF documents and images (.jpg | .jpeg | .png) may be uploaded"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple" })
-            @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10 text-success">
-            @ViewBag.UploadStatus
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Upload" class="btn btn-primary" />
+            <button type="submit" class="btn btn-outline-primary">Submit <span class="glyphicon glyphicon-send"></span></button>
         </div>
     </div>
 </div>

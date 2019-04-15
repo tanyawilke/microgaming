@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Microgaming.Startup))]
-namespace Microgaming
+[assembly: OwinStartupAttribute(typeof(FinanceRequest.Startup))]
+namespace FinanceRequest
 {
     public partial class Startup
     {
