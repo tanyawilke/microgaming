@@ -177,6 +177,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DisplayRequestsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -237,6 +238,10 @@
     <Compile Include="Migrations\201904201357520_userrole.cs" />
     <Compile Include="Migrations\201904201357520_userrole.Designer.cs">
       <DependentUpon>201904201357520_userrole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904201836197_statusid1.cs" />
+    <Compile Include="Migrations\201904201836197_statusid1.Designer.cs">
+      <DependentUpon>201904201836197_statusid1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -353,6 +358,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\DisplayRequests\" />
     <Folder Include="Views\Role\" />
   </ItemGroup>
   <ItemGroup>
@@ -405,6 +411,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904201357520_userrole.resx">
       <DependentUpon>201904201357520_userrole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904201836197_statusid1.resx">
+      <DependentUpon>201904201836197_statusid1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

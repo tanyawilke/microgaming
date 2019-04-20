@@ -89,7 +89,7 @@ namespace FinanceRequest.Controllers
                 request.Amount = Convert.ToDecimal(requestForm["Amount"].Replace(".", ","));
                 request.SubmissionDate = DateTime.Today;
                 request.ModifyDate = DateTime.Today;
-                // request.User = authUser;
+                request.User = authUser;
                 request.StatusId = 1;
                 request.ConfirmationCode = Guid.NewGuid().ToString().Substring(0, 9);
 
@@ -166,7 +166,7 @@ namespace FinanceRequest.Controllers
                     {
                         foreach (var validationError in entityValidationErrors.ValidationErrors)
                         {
-                            ViewBag.Message("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                            TempData["notice"] = "Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage;
                         }
                     }
                 }
