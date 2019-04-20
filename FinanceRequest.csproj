@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -179,6 +179,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -217,21 +218,25 @@
     <Compile Include="Migrations\201904141721403_AttachmentModel.Designer.cs">
       <DependentUpon>201904141721403_AttachmentModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201904141917331_AddColumnToRequest.cs" />
-    <Compile Include="Migrations\201904141917331_AddColumnToRequest.Designer.cs">
-      <DependentUpon>201904141917331_AddColumnToRequest.cs</DependentUpon>
+    <Compile Include="Migrations\201904171825353_UserModel2.cs" />
+    <Compile Include="Migrations\201904171825353_UserModel2.Designer.cs">
+      <DependentUpon>201904171825353_UserModel2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201904151503288_amendedstatus.cs" />
-    <Compile Include="Migrations\201904151503288_amendedstatus.Designer.cs">
-      <DependentUpon>201904151503288_amendedstatus.cs</DependentUpon>
+    <Compile Include="Migrations\201904171827451_UserModel3.cs" />
+    <Compile Include="Migrations\201904171827451_UserModel3.Designer.cs">
+      <DependentUpon>201904171827451_UserModel3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201904151510524_amendeduser.cs" />
-    <Compile Include="Migrations\201904151510524_amendeduser.Designer.cs">
-      <DependentUpon>201904151510524_amendeduser.cs</DependentUpon>
+    <Compile Include="Migrations\201904171831261_UserModel4.cs" />
+    <Compile Include="Migrations\201904171831261_UserModel4.Designer.cs">
+      <DependentUpon>201904171831261_UserModel4.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201904151520523_amendrequest.cs" />
-    <Compile Include="Migrations\201904151520523_amendrequest.Designer.cs">
-      <DependentUpon>201904151520523_amendrequest.cs</DependentUpon>
+    <Compile Include="Migrations\201904201040278_confirmationcodelength.cs" />
+    <Compile Include="Migrations\201904201040278_confirmationcodelength.Designer.cs">
+      <DependentUpon>201904201040278_confirmationcodelength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904201357520_userrole.cs" />
+    <Compile Include="Migrations\201904201357520_userrole.Designer.cs">
+      <DependentUpon>201904201357520_userrole.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -241,9 +246,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-FinanceRequest-20190414095813.mdf" />
-    <Content Include="App_Data\aspnet-FinanceRequest-20190414095813_log.ldf">
-      <DependentUpon>aspnet-FinanceRequest-20190414095813.mdf</DependentUpon>
+    <Content Include="App_Data\aspnet-FinanceRequest-20190414095815.mdf" />
+    <Content Include="App_Data\aspnet-FinanceRequest-20190414095815_log.ldf">
+      <DependentUpon>aspnet-FinanceRequest-20190414095815.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\aspnet-FinanceRequest-20190414095816.mdf" />
+    <Content Include="App_Data\aspnet-FinanceRequest-20190414095816_log.ldf">
+      <DependentUpon>aspnet-FinanceRequest-20190414095816.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -339,9 +348,12 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\_FileUpload.cshtml" />
+    <Content Include="Views\Home\CreateConfirmation.cshtml" />
+    <Content Include="Views\Account\_RolesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\Role\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -379,17 +391,20 @@
     <EmbeddedResource Include="Migrations\201904141721403_AttachmentModel.resx">
       <DependentUpon>201904141721403_AttachmentModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904141917331_AddColumnToRequest.resx">
-      <DependentUpon>201904141917331_AddColumnToRequest.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201904171825353_UserModel2.resx">
+      <DependentUpon>201904171825353_UserModel2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904151503288_amendedstatus.resx">
-      <DependentUpon>201904151503288_amendedstatus.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201904171827451_UserModel3.resx">
+      <DependentUpon>201904171827451_UserModel3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904151510524_amendeduser.resx">
-      <DependentUpon>201904151510524_amendeduser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201904171831261_UserModel4.resx">
+      <DependentUpon>201904171831261_UserModel4.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904151520523_amendrequest.resx">
-      <DependentUpon>201904151520523_amendrequest.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201904201040278_confirmationcodelength.resx">
+      <DependentUpon>201904201040278_confirmationcodelength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904201357520_userrole.resx">
+      <DependentUpon>201904201357520_userrole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

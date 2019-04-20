@@ -13,7 +13,7 @@ namespace FinanceRequest.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(FinanceRequest.Models.ApplicationDbContext context)

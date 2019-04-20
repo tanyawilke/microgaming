@@ -22,11 +22,11 @@
                     <button class="navbar-toggler my-2 mr-2 ml-auto" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
                         MENU <i class="fa fa-bars"></i>
                     </button>
-                    <div class="collapse navbar-collapse d-lg-flex align-self-stretch" id="navbarNavDropdown">
-                        <ul class="navbar-nav align-self-stretch align-content-lg-start">
+                    <div class="collapse navbar-collapse d-lg-flex" id="navbarNavDropdown">
+                        <ul class="navbar-nav mr-auto">
                             <li class="nav-item h-100">@Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })</li>
                         </ul>
-                        @Html.Partial("_LoginPartial")
+                        <span>@Html.Partial("_LoginPartial")</span>
                     </div>
                 </nav>
             </div>
