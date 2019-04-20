@@ -89,11 +89,12 @@ namespace FinanceRequest.Models
         [DataType(DataType.Date)]
         public DateTime? ModifyDate { get; set; }
 
-        //public string User { get; set; }
-        //[ForeignKey(nameof(User))]
-        //public virtual ApplicationUser ApplicationUser { get; set; }
+        [Required]
+        public string User { get; set; }
+        [ForeignKey(nameof(User))]
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
-        [MaxLength(10)]
+        [MaxLength(50)]
         public string ConfirmationCode { get; set; }
 
     }

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "Add Role";
+}
+<table id="tbrole" style="width:100%; border:dotted 1px; background-color:gainsboro; padding-left:10px;">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="width:100%; border:dotted 1px;">
+                @item.Name
+            </td>
+        </tr>}
+</table> 

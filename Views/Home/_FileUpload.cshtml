@@ -1,13 +1,15 @@
 ﻿@model FinanceRequest.Models.AttachmentModel
-<div class="form-control-file">
-    @Html.LabelFor(model => model.File, htmlAttributes: new { @class = "control-label m-1" })<a href="#" data-toggle="tooltip" data-placement="right" title="Upload 1 or more files. Only PDF documents and images (.jpg | .jpeg | .png) may be uploaded"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-    <div class="col-md-10">
-        @Html.TextBoxFor(model => model.File, "", new { @type = "file", @multiple = "multiple", @Name = "upload" })
-        @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.File, htmlAttributes: new { @class = "control-label m-1" })<a href="#" data-toggle="tooltip" data-placement="right" title="Upload 1 or more files. Only PDF documents and images (.jpg | .jpeg | .png) may be uploaded"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+        </div>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.File, "", new { @type = "file", @multiple = "multiple", @Name = "upload" })
+            @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
+        </div>
     </div>
-</div>
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10 text-success">
-        @ViewBag.UploadStatus
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 text-success">
+            @ViewBag.UploadStatus
+        </div>
     </div>
-</div>

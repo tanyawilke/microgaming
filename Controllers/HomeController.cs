@@ -69,8 +69,7 @@ namespace FinanceRequest.Controllers
             return callbackUrl;
         }
 
-        //[Authorize]
-        //// POST: AdsViewAdverts/Create
+        [Authorize]
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -78,6 +77,7 @@ namespace FinanceRequest.Controllers
         public ActionResult Index([Bind(Include = "Id")] FormCollection requestForm, HttpPostedFileBase[] upload)
         {
             var authUser = User.Identity.GetUserId();
+            bool uploadedFileFailure = false;
 
             if (ModelState.IsValid)
             {
@@ -142,11 +142,12 @@ namespace FinanceRequest.Controllers
 
                                         db.Attachment.Add(requestAttachment);
 
-                                        TempData["notice"] = upload.Count().ToString() + " file(s) uploaded.";
+                                        // TempData["notice"] = upload.Count().ToString() + " file(s) uploaded.";
                                     }
                                     catch (Exception ex)
                                     {
-                                        TempData["notice"] = ex.Message.ToString();
+                                        // TempData["notice"] = ex.Message.ToString();
+                                        uploadedFileFailure = true;
                                     }
                                 }                                
                             }
@@ -156,8 +157,7 @@ namespace FinanceRequest.Controllers
 
                         //string callbackUrl = SendEmailConfirmationTokenAsync(authUser, requestId, "Confirm your request.");
 
-                        //return RedirectToAction(nameof(CreateConfirmation), new { uploadedFile = uploadedFileFailure, contactInformation = contactInformationFailure });
-                        //return RedirectToAction(nameof(CreateConfirmation), new RouteValueDictionary( new { controller = this, action = "CreateConfirmation", uploadedFile = uploadedFileFailure, contactInformation = contactInformationFailure }));
+                        return RedirectToAction(nameof(CreateConfirmation), new { uploadedFile = uploadedFileFailure });
                     }
                 }
                 catch (DbEntityValidationException ex)
@@ -173,6 +173,21 @@ namespace FinanceRequest.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public ActionResult CreateConfirmation(bool uploadedFile = false)
+        {
+            StringBuilder message = new StringBuilder();
+            message.Append("Your request has been created successfully.  It will be reviewed by your administrator who will notify you of the outcome.");
+
+            if (uploadedFile)
+            {
+                message.Append("Note that an error occurred when you attempted to upload your supporting documentation  The likely cause is the file is in an invalid file format. Please edit your ad and upload the file in its correct format. ");
+            }
+
+            ViewBag.Message = message;
+
+            return View();
         }
     }
 }

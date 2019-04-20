@@ -129,3 +129,16 @@ select,
 textarea {
     max-width: 280px;
 }
+
+ul.validation-summary-errors .text-danger {
+    border: 1px solid #dc3545 !important;
+    
+}
+
+.validation-summary-errors .text-danger ul li {
+    list-style: none !important;
+}
+
+.alert-danger {
+    background-color: #db7e86;
+}
