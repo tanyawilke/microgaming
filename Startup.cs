@@ -29,17 +29,17 @@ namespace FinanceRequest
             {
 
                 // first we create Admin rool    
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                var role = new IdentityRole();
                 role.Name = "Admin";
                 roleManager.Create(role);
 
                 //Here we create a Admin super user who will maintain the website                   
 
                 var user = new ApplicationUser();
-                user.UserName = "shanu";
-                user.Email = "syedshanumcain@gmail.com";
+                user.UserName = "tanya";
+                user.Email = "tanya.wilke@gmail.com";
 
-                string userPWD = "A@Z200711";
+                string userPWD = "P@ssword1";
 
                 var chkUser = UserManager.Create(user, userPWD);
 
@@ -54,7 +54,7 @@ namespace FinanceRequest
             // creating Creating Manager role     
             if (!roleManager.RoleExists("User"))
             {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                var role = new IdentityRole();
                 role.Name = "User";
                 roleManager.Create(role);
 
@@ -63,7 +63,7 @@ namespace FinanceRequest
             // creating Creating Employee role     
             if (!roleManager.RoleExists("Manager"))
             {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                var role = new IdentityRole();
                 role.Name = "Manager";
                 roleManager.Create(role);
 
