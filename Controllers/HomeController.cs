@@ -35,6 +35,7 @@ namespace FinanceRequest.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Index()
         {
             return View();
@@ -78,6 +79,7 @@ namespace FinanceRequest.Controllers
         {
             var authUser = User.Identity.GetUserId();
             bool uploadedFileFailure = false;
+            string uploadedFileMessage = string.Empty;
 
             if (ModelState.IsValid)
             {
@@ -105,7 +107,6 @@ namespace FinanceRequest.Controllers
                     {
                         AttachmentModel requestAttachment = new AttachmentModel();
 
-                        TempData["notice"] = "File(s) saved.";
                         bool fileIsTooLarge = false;
                         bool fileExtensionInvalid = false;
 
@@ -124,13 +125,15 @@ namespace FinanceRequest.Controllers
                                 if (!allowedFileExtentions.FileExtentionAllowed(checkextension))
                                 {
                                     fileExtensionInvalid = true;
-                                    TempData["notice"] = "Only PDF documents and images (.jpg | .jpeg | .png) may be uploaded.";
+                                    uploadedFileMessage = "Only PDF documents and images (.jpg | .jpeg | .png) may be uploaded.";
+                                    uploadedFileFailure = true;
                                 }
 
                                 if (maximumAttachmentSize.AllowedFileSize(upload.Count(), file.ContentLength))
                                 {
                                     fileIsTooLarge = true;
-                                    TempData["notice"] = "A single attachment cannot exceed than 3MB and the total attachment size cannot exceed 15MB.";
+                                    uploadedFileMessage = "A single attachment cannot exceed than 3MB and the total attachment size cannot exceed 15MB.";
+                                    uploadedFileFailure = true;
                                 }
 
                                 if ((!fileExtensionInvalid) && (!fileIsTooLarge))
@@ -142,11 +145,11 @@ namespace FinanceRequest.Controllers
 
                                         db.Attachment.Add(requestAttachment);
 
-                                        // TempData["notice"] = upload.Count().ToString() + " file(s) uploaded.";
+                                        uploadedFileMessage = upload.Count().ToString() + " file(s) uploaded.";
                                     }
                                     catch (Exception ex)
                                     {
-                                        // TempData["notice"] = ex.Message.ToString();
+                                        uploadedFileMessage = ex.Message.ToString();
                                         uploadedFileFailure = true;
                                     }
                                 }                                
@@ -157,7 +160,7 @@ namespace FinanceRequest.Controllers
 
                         //string callbackUrl = SendEmailConfirmationTokenAsync(authUser, requestId, "Confirm your request.");
 
-                        return RedirectToAction(nameof(CreateConfirmation), new { uploadedFile = uploadedFileFailure });
+                        return RedirectToAction(nameof(CreateConfirmation), new { message = uploadedFileMessage, uploadedFile = uploadedFileFailure });
                     }
                 }
                 catch (DbEntityValidationException ex)
@@ -175,14 +178,18 @@ namespace FinanceRequest.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public ActionResult CreateConfirmation(bool uploadedFile = false)
+        public ActionResult CreateConfirmation(string fileMessage, bool uploadedFile = false)
         {
             StringBuilder message = new StringBuilder();
-            message.Append("Your request has been created successfully.  It will be reviewed by your administrator who will notify you of the outcome.");
+            message.AppendLine("Your request has been created successfully.  It will be reviewed by your administrator who will notify you of the outcome.");
 
             if (uploadedFile)
             {
-                message.Append("Note that an error occurred when you attempted to upload your supporting documentation  The likely cause is the file is in an invalid file format. Please edit your ad and upload the file in its correct format. ");
+                message.AppendLine("Note that an error occurred when you attempted to upload your supporting documentation.  " + fileMessage + " Please edit your request and upload the file in its correct format.");
+            }
+            else
+            {
+                message.AppendLine(fileMessage);
             }
 
             ViewBag.Message = message;

@@ -142,3 +142,17 @@ ul.validation-summary-errors .text-danger {
 .alert-danger {
     background-color: #db7e86;
 }
+
+.table_border {
+    color: #FFF !important;
+    margin: 20px 0;
+}
+
+.table_border th,
+.table_border td {
+    color: #FFF;
+    padding: 5px;
+    border: 1px solid #FFF;
+    empty-cells: show;
+    border-collapse: collapse;
+}

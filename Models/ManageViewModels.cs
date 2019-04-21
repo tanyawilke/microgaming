@@ -79,7 +79,7 @@ namespace FinanceRequest.Models
         [ForeignKey(nameof(StatusId))]
         public virtual StatusModel Status { get; set; }
 
-        [Display(Name = "Last modified date")]
+        [Display(Name = "Submission date")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime? SubmissionDate { get; set; }
