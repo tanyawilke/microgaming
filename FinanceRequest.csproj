@@ -180,6 +180,7 @@
     <Compile Include="Controllers\DisplayRequestsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RequestListController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -355,6 +356,10 @@
     <Content Include="Views\Home\_FileUpload.cshtml" />
     <Content Include="Views\Home\CreateConfirmation.cshtml" />
     <Content Include="Views\Account\_RolesList.cshtml" />
+    <Content Include="Views\RequestList\Index.cshtml" />
+    <Content Include="Views\RequestList\MyRequests.cshtml" />
+    <Content Include="Views\RequestList\Details.cshtml" />
+    <Content Include="Views\RequestList\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFiles\" />

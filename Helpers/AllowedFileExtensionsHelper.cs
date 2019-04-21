@@ -8,16 +8,34 @@ namespace FinanceRequest.Helpers
 {
     public class AllowedFileExtensionsHelper
     {
-        private readonly string[] allowedFileExtensions = ConfigurationManager.AppSettings["FileExtensionsAllowed"].Split(',');
+        private readonly string[] allowedFileExtensions = ConfigurationManager.AppSettings["FileExtensionsAllowed"].Split(',').ToArray();
+        private bool isValidExtension;
 
         public bool FileExtentionAllowed(string[] fileExtentions)
         {
-            foreach (var extention in fileExtentions)
+            if (fileExtentions.Length > 1)
             {
-                if (!allowedFileExtensions.Contains(extention))
+                foreach (string extention in fileExtentions)
                 {
-                    return false;
+                    isValidExtension = ContainsExtension(allowedFileExtensions, extention);
                 }
+            }
+            else
+            {
+                isValidExtension = ContainsExtension(allowedFileExtensions, fileExtentions[0].ToString());
+            }            
+
+            return isValidExtension;
+        }
+
+        private bool ContainsExtension(string[] array, string valueToTest)
+        {
+            bool isContained = array.Contains(valueToTest);
+            //bool isContained = Array.Exists(array, element => element == valueToTest);
+
+            if (!isContained)
+            {
+                return false;
             }
 
             return true;

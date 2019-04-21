@@ -24,8 +24,19 @@
                     </button>
                     <div class="collapse navbar-collapse d-lg-flex" id="navbarNavDropdown">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item h-100">@Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })</li>
-                        </ul>
+                            <li class="nav-item h-100">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
+                            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                            {
+                                if (HttpContext.Current.User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item h-100">@Html.ActionLink("Request list", "Index", "RequestList", null, new { @class = "nav-link" })</li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item h-100">@Html.ActionLink("My requests", "MyRequests", "RequestList", null, new { @class = "nav-link" })</li>
+                                }
+                            }
+                            </ul>
                         <span>@Html.Partial("_LoginPartial")</span>
                     </div>
                 </nav>

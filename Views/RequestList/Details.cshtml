@@ -1,0 +1,71 @@
+﻿@model FinanceRequest.Models.RequestModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <h1>@ViewBag.Title</h1>
+    <h3>@ViewBag.Message</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <div>@Html.ActionLink("Return to my requests", "MyRequests")</div>
+            </p>
+            <div class="container well">
+                <h3>Request information</h3>
+                <div class="form-group">
+                    @Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)
+                </div>
+                <div class="form-group">
+                    @Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)
+                </div>
+                <div class="form-group">
+                    @Html.DisplayNameFor(model => model.PlayItForward): @Html.DisplayFor(model => model.PlayItForward)
+                </div>
+                <div class="form-group">
+                    @Html.DisplayNameFor(model => model.Amount): @Html.DisplayFor(model => model.Amount)
+                </div>
+                <div class="form-group">
+                    @Html.DisplayNameFor(model => model.SubmissionDate): @Html.DisplayFor(model => model.SubmissionDate)
+                </div>
+                <div class="form-group">
+                    @Html.DisplayNameFor(model => model.ModifyDate): @Html.DisplayFor(model => model.ModifyDate)
+                </div>
+                @*<h3>Supporting information</h3>
+                @{
+                    if (Model. != null)
+                    {
+                        var fileContentType = Model.AdsViewFile.ContentType != null ? Model.AdsViewFile.ContentType : null;
+                        var fileId = Model.AdsViewFile.FileId != 0 ? Model.AdsViewFile.FileId : 0;
+                        var fileName = Model.AdsViewFile.Filename != null ? Model.AdsViewFile.Filename : null;
+                        var fileContent = Model.AdsViewFile.Content != null ? Model.AdsViewFile.Content : null;
+
+                        <div class="form-group">
+                            @if (fileId > 0)
+                            {
+                                if (fileContentType.Contains("image"))
+                                {
+                                    <img src="~/File?id=@fileId" alt="ad" />
+                                }
+                                else
+                                {
+                                    <a href="~/File?id=@fileId" alt="ad" target="_blank"><div class="docAttachment"></div></a>
+                                }
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p>No supporting documentation or images attached is available for this ad.</p>
+                    }
+                }*@
+
+
+            </div>
+            <p>
+                <div>@Html.ActionLink("Return to my requests", "MyRequests")</div>
+            </p>
+        </div>
+    </div>
+</div>

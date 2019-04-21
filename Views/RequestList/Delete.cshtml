@@ -1,0 +1,33 @@
+﻿@model FinanceRequest.Models.RequestModel
+
+@{
+    ViewBag.Title = "Delete request";
+}
+
+<div class="container">
+    <h1>@ViewBag.Title</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container well">
+                <h3>@ViewBag.Message</h3>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <p>Are you sure you want to delete this request?</p>
+                    <hr />
+                    <div class="form-group">
+                        @Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)
+                    </div>
+                    <div class="form-group">
+                        @Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-outline-primary">Yes, I am sure <span class="glyphicon glyphicon-send"></span></button>                        
+                    </div>
+                }
+            </div>
+            <div class="mt-lg-5">@Html.ActionLink("Back to my requests", "MyRequests")</div>
+        </div>
+    </div>
+</div>
