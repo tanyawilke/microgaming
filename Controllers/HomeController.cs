@@ -120,8 +120,6 @@ namespace FinanceRequest.Controllers
                                 var allowedFileExtentions = new AllowedFileExtensionsHelper();
                                 var maximumAttachmentSize = new AllowedFileSizeHelper();
 
-                                // Todo one entrypoint into size check
-
                                 if (!allowedFileExtentions.FileExtentionAllowed(checkextension))
                                 {
                                     fileExtensionInvalid = true;
@@ -142,6 +140,7 @@ namespace FinanceRequest.Controllers
                                     {
                                         requestAttachment.RequestId = requestId;
                                         requestAttachment.File = Path.GetFileName(file.FileName);
+                                        requestAttachment.ContentType = file.ContentType;
 
                                         db.Attachment.Add(requestAttachment);
 
@@ -169,7 +168,8 @@ namespace FinanceRequest.Controllers
                     {
                         foreach (var validationError in entityValidationErrors.ValidationErrors)
                         {
-                            TempData["notice"] = "Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage;
+                            // Sent to error page
+                            // TempData["notice"] = "Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage;
                         }
                     }
                 }

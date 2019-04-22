@@ -58,8 +58,8 @@ h1, .h1 {
 }
 
     .navbar-nav > li > a:hover,
-    nav-link:hover {
-        color: #FFF;
+    a.nav-link:hover {
+        color: #FFF !important;
         font-weight: 400;
         text-decoration: underline;
     }
@@ -155,4 +155,9 @@ ul.validation-summary-errors .text-danger {
     border: 1px solid #FFF;
     empty-cells: show;
     border-collapse: collapse;
+}
+
+.button-link {
+    border: 1px solid #FFF;
+    padding: 5px;
 }

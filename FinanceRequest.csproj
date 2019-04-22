@@ -178,6 +178,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DisplayRequestsController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RequestListController.cs" />
@@ -243,6 +244,10 @@
     <Compile Include="Migrations\201904201836197_statusid1.cs" />
     <Compile Include="Migrations\201904201836197_statusid1.Designer.cs">
       <DependentUpon>201904201836197_statusid1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904221438069_attachmentcolumns.cs" />
+    <Compile Include="Migrations\201904221438069_attachmentcolumns.Designer.cs">
+      <DependentUpon>201904221438069_attachmentcolumns.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -361,11 +366,13 @@
     <Content Include="Views\RequestList\MyRequests.cshtml" />
     <Content Include="Views\RequestList\Details.cshtml" />
     <Content Include="Views\RequestList\Delete.cshtml" />
+    <Content Include="Views\Request\Edit.cshtml" />
     <Content Include="Views\RequestList\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFiles\" />
     <Folder Include="Views\DisplayRequests\" />
+    <Folder Include="Views\File\" />
     <Folder Include="Views\Role\" />
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +428,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904201836197_statusid1.resx">
       <DependentUpon>201904201836197_statusid1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904221438069_attachmentcolumns.resx">
+      <DependentUpon>201904221438069_attachmentcolumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
