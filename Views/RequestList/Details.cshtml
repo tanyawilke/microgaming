@@ -37,29 +37,31 @@
                     {
                         var fileId = Model.Attachment.Id != 0 ? Model.Attachment.Id : 0;
                         var fileName = Model.Attachment.File != null ? Model.Attachment.File : null;
-
+                        var contentType = Model.Attachment.ContentType != null ? Model.Attachment.ContentType : null;
+                        var fileContent = Model.Attachment.Content != null ? Model.Attachment.Content : null;
+                        
                         <div class="form-group">
                             @if (fileId > 0)
                             {
-                                @*if (fileContentType.Contains("image"))
+                                if (contentType.Contains("image"))
                                 {
-                                    <img src="~/File?id=@fileId" alt="ad" />
+                                    <a href="~/File?id=@fileId" alt="ad" target="_blank"><img src="~/File?id=@fileId" alt="ad" style="width: 100px; height: 100px;"/></a>
                                 }
                                 else
                                 {
                                     <a href="~/File?id=@fileId" alt="ad" target="_blank"><div class="docAttachment"></div></a>
-                                }*@
+                                }
                             }
                         </div>
                     }
                     else
                     {
-                        <p>No supporting documentation or image(s) attached  for this request.</p>
+                        <p>No supporting documentation or image attached to this request.</p>
                     }
                 }
-                @if (Model.Request.StatusId != 2)
+                @if ((Model.Request.StatusId != 2) && (!User.IsInRole("Admin")))
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.Request.Id }, new { @class = "btn btn-outline-primary m-2" }) 
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Request.Id }, new { @class = "btn btn-outline-primary m-2" })
                     @Html.ActionLink("Delete", "Delete", new { id = Model.Request.Id }, new { @class = "btn btn-outline-primary m-2" })
                 }
             </div>

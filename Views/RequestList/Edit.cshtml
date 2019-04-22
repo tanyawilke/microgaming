@@ -57,26 +57,36 @@
             <h3>Supporting information</h3>
         </div>
     </div>
-    if (Model.Attachment != null)
     {
-        var fileId = Model.Attachment.Id != 0 ? Model.Attachment.Id : 0;
-        var fileName = Model.Attachment.File != null ? Model.Attachment.File : null;
+        if (Model.Attachment != null)
+        {
+            var fileId = Model.Attachment.Id != 0 ? Model.Attachment.Id : 0;
+            var fileName = Model.Attachment.File != null ? Model.Attachment.File : null;
+            var contentType = Model.Attachment.ContentType != null ? Model.Attachment.ContentType : null;
+            var fileContent = Model.Attachment.Content != null ? Model.Attachment.Content : null;
 
-        <div class="form-group col-md-10">
-            @Html.Label("Attachment", htmlAttributes: new { @class = "control-label" })
-            @if (fileId > 0)
-            {
-                <p>@Model.Attachment.File</p>
+            <div class="form-group">
+                <div class="col-md-10">
+                    @if (fileId > 0)
+                    {
+                        if (contentType.Contains("image"))
+                        {
+                            <a href="~/File?id=@fileId" alt="ad" target="_blank"><img src="~/File?id=@fileId" alt="ad" style="width: 100px; height: 100px;" /></a>
+                        }
+                        else
+                        {
+                            <a href="~/File?id=@fileId" alt="ad" target="_blank"><div class="docAttachment"></div></a>
+                        }
+                    }
 
-                <p>To upload (an) alternate attachment(s), please use the field below.</p>
-            }
-        </div>
-    }
-    else
-    {
-        <div class="form-group col-md-10">
-            There is no supporting.  Please use the field below to add an attachment if relevant.
-        </div>
+                    <div class="mt-3">To upload (an) alternate attachment(s), please use the field below.</div>
+                </div>
+            </div>            
+        }
+        else
+        {
+        <p>No supporting documentation or image attached to this request.</p>
+        }
     }
     @Html.Partial("~/Views/Home/_FileUpload.cshtml")
     <div class="form-group">
@@ -85,4 +95,4 @@
         </div>
     </div>
     <div class="mt-lg-5">@Html.ActionLink("Back to my requests", "MyRequests")</div>
-}
+    }

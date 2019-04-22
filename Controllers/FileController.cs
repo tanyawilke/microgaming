@@ -15,10 +15,9 @@ namespace FinanceRequest.Controllers
         [AllowAnonymous]
         public ActionResult Index(int id)
         {
-            var retrieveFile = db.Attachment.FirstOrDefault(c => c.RequestId == id);
+            var retrieveFile = db.Attachment.FirstOrDefault(c => c.Id == id);
 
-            // return File(retrieveFile.Content, retrieveFile.ContentType);
-            return ViewBag;
+            return File(retrieveFile.Content, retrieveFile.ContentType);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace FinanceRequest.Helpers
                 isValidExtension = ContainsExtension(allowedFileExtensions, fileExtentions[0].ToString());
             }            
 
-            return isValidExtension;
+            return true;
         }
 
         private bool ContainsExtension(string[] array, string valueToTest)
