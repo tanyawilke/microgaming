@@ -8,7 +8,7 @@ namespace FinanceRequest.Helpers
 {
     public class AllowedFileExtensionsHelper
     {
-        private readonly string[] allowedFileExtensions = ConfigurationManager.AppSettings["FileExtensionsAllowed"].Split(',').ToArray();
+        private readonly string[] allowedFileExtensions = ConfigurationManager.AppSettings["FileExtensionsAllowed"].Split(',');
         private bool isValidExtension;
 
         public bool FileExtentionAllowed(string[] fileExtentions)
@@ -25,20 +25,21 @@ namespace FinanceRequest.Helpers
                 isValidExtension = ContainsExtension(allowedFileExtensions, fileExtentions[0].ToString());
             }            
 
-            return true;
+            return isValidExtension;
         }
 
         private bool ContainsExtension(string[] array, string valueToTest)
         {
-            bool isContained = array.Contains(valueToTest);
-            //bool isContained = Array.Exists(array, element => element == valueToTest);
+            bool isContained = false;
 
-            if (!isContained)
+            var match = array.FirstOrDefault(stringToCheck => stringToCheck.Contains(valueToTest));
+
+           if (match != null)
             {
-                return false;
+                isContained = true;
             }
 
-            return true;
+            return isContained;
         }
     }
 }
