@@ -194,7 +194,7 @@ namespace FinanceRequest.Controllers
                 request.Description = requestForm["Request.Description"];
                 request.ModifyDate = DateTime.Today;
                 request.Amount = Convert.ToDecimal(requestForm["Request.Amount"].Replace(".", ","));
-                request.StatusId = Int32.Parse(requestForm["Request.StatusId"]);
+                request.StatusId = requestForm["Request.StatusId"] != null ? Int32.Parse(requestForm["Request.StatusId"]) : 1;
                 request.User = authUser;
 
                 db.Entry(request).State = EntityState.Modified;

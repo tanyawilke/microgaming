@@ -161,3 +161,11 @@ ul.validation-summary-errors .text-danger {
     border: 1px solid #FFF;
     padding: 5px;
 }
+
+.docAttachment {
+    background-image: url('images/paper-clip-hi.png');
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 75px;
+    background-position-y: center;
+}

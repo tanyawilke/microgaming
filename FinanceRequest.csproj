@@ -275,6 +275,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\paper-clip-hi.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -366,13 +367,13 @@
     <Content Include="Views\RequestList\MyRequests.cshtml" />
     <Content Include="Views\RequestList\Details.cshtml" />
     <Content Include="Views\RequestList\Delete.cshtml" />
-    <Content Include="Views\Request\Edit.cshtml" />
     <Content Include="Views\RequestList\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UploadedFiles\" />
     <Folder Include="Views\DisplayRequests\" />
     <Folder Include="Views\File\" />
+    <Folder Include="Views\Request\" />
     <Folder Include="Views\Role\" />
   </ItemGroup>
   <ItemGroup>

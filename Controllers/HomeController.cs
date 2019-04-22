@@ -142,7 +142,12 @@ namespace FinanceRequest.Controllers
                                         requestAttachment.File = Path.GetFileName(file.FileName);
                                         requestAttachment.ContentType = file.ContentType;
 
-                                        db.Attachment.Add(requestAttachment);
+                                        using (var reader = new BinaryReader(file.InputStream))
+                                        {
+                                            requestAttachment.Content = reader.ReadBytes(file.ContentLength);
+
+                                            db.Attachment.Add(requestAttachment);
+                                        }
 
                                         uploadedFileMessage = upload.Count().ToString() + " file(s) uploaded.";
                                     }
