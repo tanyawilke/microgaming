@@ -116,6 +116,9 @@ namespace FinanceRequest.Models
         [Display(Name = "Browse file(s)")]
         [DataType(DataType.Upload)]
         public string File { get; set; }
+        [StringLength(100)]
+        public string ContentType { get; set; }
+        public byte[] Content { get; set; }
         public int RequestId { get; set; }
         [ForeignKey(nameof(RequestId))]
         public virtual RequestModel Request { get; set; }

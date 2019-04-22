@@ -1,4 +1,4 @@
-﻿@model FinanceRequest.Models.RequestModel
+﻿@model FinanceRequest.Models.BigViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -9,63 +9,60 @@
     <h3>@ViewBag.Message</h3>
     <div class="row">
         <div class="col-md-12">
-            <p>
-                <div>@Html.ActionLink("Return to my requests", "MyRequests")</div>
-            </p>
             <div class="container well">
                 <h3>Request information</h3>
                 <div class="form-group">
-                    @Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)
+                    @Html.DisplayNameFor(model => model.Request.Title): @Html.DisplayFor(model => model.Request.Title)
                 </div>
                 <div class="form-group">
-                    @Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)
+                    @Html.DisplayNameFor(model => model.Request.Description): @Html.DisplayFor(model => model.Request.Description)
                 </div>
                 <div class="form-group">
-                    @Html.DisplayNameFor(model => model.PlayItForward): @Html.DisplayFor(model => model.PlayItForward)
+                    @Html.DisplayNameFor(model => model.Request.PlayItForward): @Html.DisplayFor(model => model.Request.PlayItForward)
                 </div>
                 <div class="form-group">
-                    @Html.DisplayNameFor(model => model.Amount): @Html.DisplayFor(model => model.Amount)
+                    @Html.DisplayNameFor(model => model.Request.Amount): @Html.DisplayFor(model => model.Request.Amount)
                 </div>
                 <div class="form-group">
-                    @Html.DisplayNameFor(model => model.SubmissionDate): @Html.DisplayFor(model => model.SubmissionDate)
+                    @Html.DisplayNameFor(model => model.Request.SubmissionDate): @Html.DisplayFor(model => model.Request.SubmissionDate)
                 </div>
                 <div class="form-group">
-                    @Html.DisplayNameFor(model => model.ModifyDate): @Html.DisplayFor(model => model.ModifyDate)
+                    @Html.DisplayNameFor(model => model.Request.Status): @Html.DisplayFor(model => model.Request.Status.Description)
                 </div>
-                @*<h3>Supporting information</h3>
+                @Html.HiddenFor(model => model.Request.StatusId)
+
+                <h3>Supporting information</h3>
                 @{
-                    if (Model. != null)
+                    if (Model.Attachment != null)
                     {
-                        var fileContentType = Model.AdsViewFile.ContentType != null ? Model.AdsViewFile.ContentType : null;
-                        var fileId = Model.AdsViewFile.FileId != 0 ? Model.AdsViewFile.FileId : 0;
-                        var fileName = Model.AdsViewFile.Filename != null ? Model.AdsViewFile.Filename : null;
-                        var fileContent = Model.AdsViewFile.Content != null ? Model.AdsViewFile.Content : null;
+                        var fileId = Model.Attachment.Id != 0 ? Model.Attachment.Id : 0;
+                        var fileName = Model.Attachment.File != null ? Model.Attachment.File : null;
 
                         <div class="form-group">
                             @if (fileId > 0)
                             {
-                                if (fileContentType.Contains("image"))
+                                @*if (fileContentType.Contains("image"))
                                 {
                                     <img src="~/File?id=@fileId" alt="ad" />
                                 }
                                 else
                                 {
                                     <a href="~/File?id=@fileId" alt="ad" target="_blank"><div class="docAttachment"></div></a>
-                                }
+                                }*@
                             }
                         </div>
                     }
                     else
                     {
-                        <p>No supporting documentation or images attached is available for this ad.</p>
+                        <p>No supporting documentation or image(s) attached  for this request.</p>
                     }
-                }*@
-
-
+                }
+                @if (Model.Request.StatusId != 2)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Request.Id }, new { @class = "btn btn-outline-primary m-2" }) 
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.Request.Id }, new { @class = "btn btn-outline-primary m-2" })
+                }
             </div>
-            <p>
-                <div>@Html.ActionLink("Return to my requests", "MyRequests")</div>
-            </p>
         </div>
     </div>
 </div>

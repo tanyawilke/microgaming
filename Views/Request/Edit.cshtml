@@ -66,7 +66,14 @@
             @Html.Label("Attachment", htmlAttributes: new { @class = "control-label" })
             @if (fileId > 0)
             {
-                <p>@Model.Attachment.File</p>
+                @*if (fileContentType.Contains("image"))
+                    {
+                        <img src="~/File?id=@fileId" alt="ad" />
+                    }
+                    else
+                    {
+                        <a href="~/File?id=@fileId" alt="ad" target="_blank"><div class="docAttachment"></div></a>
+                    }*@
 
                 <p>To upload (an) alternate attachment(s), please use the field below.</p>
             }

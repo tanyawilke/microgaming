@@ -4,6 +4,7 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -30,6 +31,7 @@ namespace FinanceRequest.Controllers
         }
 
         // GET: RequestList
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var allRequests = db.Request;
@@ -85,31 +87,12 @@ namespace FinanceRequest.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            try
-            {
-                var requestDetails = db.Request.Where(c => c.Id == id);
+            BigViewModel bigViewModel = new BigViewModel();
+            bigViewModel.Request = db.Request.Find(id);
+            bigViewModel.Attachment = db.Attachment.FirstOrDefault(c => c.RequestId == id);
+            bigViewModel.Status = db.Status.SingleOrDefault(c => c.Id == id);
 
-                if (requestDetails != null)
-                {
-                    return View(requestDetails);
-                }
-                else
-                {
-                    return View("You don't have any requests.");
-                }
-
-            }
-            catch (Exception Ex)
-            {
-                return View(Ex.InnerException.ToString());
-            }
-
-            //BigViewModel bigViewModel = new BigViewModel();
-            //bigViewModel.AdsViewAdverts = db.AdsViewAdverts.Find(id);
-            //bigViewModel.AdsViewContact = db.AdsViewContacts.FirstOrDefault(c => c.Advert.Id == id);
-            //bigViewModel.AdsViewFile = db.AdsViewFile.FirstOrDefault(c => c.AdId == id);
-
-            // return View(bigViewModel);
+            return View(bigViewModel);
         }
 
         // GET: RequestList/Delete/5
@@ -170,7 +153,7 @@ namespace FinanceRequest.Controllers
             return RedirectToAction(nameof(MyRequests));
         }
 
-        // GET: AdsViewAdverts/Edit/5
+        // GET: RequestList/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -180,8 +163,9 @@ namespace FinanceRequest.Controllers
 
             BigViewModel bigViewModel = new BigViewModel();
             bigViewModel.Request = db.Request.Find(id);
-            bigViewModel.Attachment = db.Attachment.SingleOrDefault(c => c.RequestId == id);
-            // bigViewModel.Status = db.Status.SingleOrDefault(c => c.RequestId == id);
+            bigViewModel.Attachment = db.Attachment.FirstOrDefault(c => c.RequestId == id);
+
+            ViewBag.StatusList = db.Status;
 
             return View(bigViewModel);
         }
@@ -203,37 +187,17 @@ namespace FinanceRequest.Controllers
 
             if (ModelState.IsValid)
             {
-                //AdsViewAdverts advert = db.AdsViewAdverts.Find(id);
-                //AdsViewContact contact = db.AdsViewContacts.FirstOrDefault(c => c.Advert.Id == id);
-                //AdsViewFile attachment = db.AdsViewFile.FirstOrDefault(c => c.AdId == id);
+                var request = db.Request.Find(id);
+                var attachment = db.Attachment.SingleOrDefault(c => c.Id == id);
+                
+                request.Title = requestForm["Request.Title"];
+                request.Description = requestForm["Request.Description"];
+                request.ModifyDate = DateTime.Today;
+                request.Amount = Convert.ToDecimal(requestForm["Request.Amount"].Replace(".", ","));
+                request.StatusId = Int32.Parse(requestForm["Request.StatusId"]);
+                request.User = authUser;
 
-                //advert.Title = adsViewAdverts["AdsViewAdverts.Title"];
-                //advert.Description = adsViewAdverts["AdsViewAdverts.Description"];
-                //advert.DateLastModified = thisDay;
-                //DateTime publishDate = DateTime.ParseExact(adsViewAdverts["AdsViewAdverts.DatePublished"], "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                //DateTime dateExpiry = DateTime.ParseExact(adsViewAdverts["AdsViewAdverts.ExpiryDate"], "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                ////string publishDate = adsViewAdverts["DatePublished"].ToString().;
-                //advert.DatePublished = Convert.ToDateTime(publishDate);
-                //////advert.DatePublished = thisDay;
-                //advert.ExpiryDate = Convert.ToDateTime(dateExpiry);
-
-                //advert.Price = Convert.ToDecimal(adsViewAdverts["AdsViewAdverts.Price"].Replace(".", ","));
-                ////advert.DateAdvertAdded = thisDay;
-                ////advert.DateOfDeleteAdvert = Convert.ToDateTime(dateExpiry);
-                //advert.CategoryId = Int32.Parse(adsViewAdverts["AdsViewAdverts.CategoryId"]);
-                //advert.AdvertTypeId = Int32.Parse(adsViewAdverts["AdsViewAdverts.AdvertTypeId"]);
-                //advert.LocationId = Int32.Parse(adsViewAdverts["AdsViewAdverts.LocationId"]);
-                //advert.SubCategoryId = Int32.Parse(adsViewAdverts["AdsViewAdverts.SubCategoryId"]);
-                //advert.User = authUser;
-
-                //contact.ContactName = adsViewAdverts["AdsViewContact.ContactName"];
-                //contact.ContactEmail = adsViewAdverts["AdsViewContact.ContactEmail"];
-                //contact.ContactPhoneNumber = adsViewAdverts["AdsViewContact.ContactPhoneNumber"];
-                //contact.ContactPhysicalAddress = adsViewAdverts["AdsViewContact.ContactPhysicalAddress"];
-                //contact.WebSite = adsViewAdverts["AdsViewContact.WebSite"];
-
-                //db.Entry(advert).State = EntityState.Modified;
-                //db.Entry(contact).State = EntityState.Modified;
+                db.Entry(request).State = EntityState.Modified;
 
                 //var addFile = false;
 
