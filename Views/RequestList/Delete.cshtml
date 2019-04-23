@@ -23,10 +23,17 @@
                 </div>
                 <hr />
                 <div class="form-group">
-                    <button type="submit" class="btn btn-outline-primary">Yes, I am sure <span class="glyphicon glyphicon-send"></span></button>                        
+                    <button type="submit" class="btn btn-outline-primary">Yes, I am sure <span class="glyphicon glyphicon-send"></span></button>
                 </div>
             }
+            @if (!User.IsInRole("Admin"))
+            {
             <div class="mt-lg-5">@Html.ActionLink("Back to my requests", "MyRequests")</div>
+            }
+            else
+            {
+            <div class="mt-lg-5">@Html.ActionLink("Back to request list", "Index")</div>
+            }
         </div>
     </div>
 </div>

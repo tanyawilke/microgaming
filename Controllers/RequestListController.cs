@@ -139,6 +139,11 @@ namespace FinanceRequest.Controllers
 
             db.SaveChanges();
 
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             return RedirectToAction(nameof(MyRequests));
         }
 

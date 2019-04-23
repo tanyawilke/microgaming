@@ -81,11 +81,11 @@
 
                     <div class="mt-3">To upload (an) alternate attachment(s), please use the field below.</div>
                 </div>
-            </div>            
+            </div>
         }
         else
         {
-        <p>No supporting documentation or image attached to this request.</p>
+            <p>No supporting documentation or image attached to this request.</p>
         }
     }
     @Html.Partial("~/Views/Home/_FileUpload.cshtml")
@@ -94,5 +94,12 @@
             <button type="submit" class="btn btn-outline-primary">Submit <span class="glyphicon glyphicon-send"></span></button>
         </div>
     </div>
-    <div class="mt-lg-5">@Html.ActionLink("Back to my requests", "MyRequests")</div>
+    if (!User.IsInRole("Admin"))
+    {
+        <div class="mt-lg-5">@Html.ActionLink("Back to my requests", "MyRequests")</div>
     }
+    else
+    {
+        <div class="mt-lg-5">@Html.ActionLink("Back to request list", "Index")</div>
+    }
+}
