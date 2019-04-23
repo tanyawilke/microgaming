@@ -1,4 +1,5 @@
-﻿using FinanceRequest.Models;
+﻿using FinanceRequest.Helpers;
+using FinanceRequest.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Data.Entity;
@@ -8,6 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,19 +18,6 @@ namespace FinanceRequest.Controllers
     public class RequestListController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private ApplicationUserManager _userManager;
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager;
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
 
         // GET: RequestList
         [Authorize(Roles = "Admin")]
@@ -173,10 +162,10 @@ namespace FinanceRequest.Controllers
         // POST: RequestList/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "Id")] FormCollection requestForm, HttpPostedFileBase upload)
+        public ActionResult Edit(int id, [Bind(Include = "Id")] FormCollection requestForm, HttpPostedFileBase[] upload)
         {
-            bool contactInformationFailure = false;
             bool uploadedFileFailure = false;
+            string uploadedFileMessage = string.Empty;
 
             if (id == null)
             {
@@ -184,6 +173,7 @@ namespace FinanceRequest.Controllers
             }
 
             var authUser = User.Identity.GetUserId();
+
 
             if (ModelState.IsValid)
             {
@@ -193,79 +183,73 @@ namespace FinanceRequest.Controllers
                 request.Title = requestForm["Request.Title"];
                 request.Description = requestForm["Request.Description"];
                 request.ModifyDate = DateTime.Today;
-                request.Amount = Convert.ToDecimal(requestForm["Request.Amount"].Replace(".", ","));
+                request.Amount = Convert.ToDecimal(requestForm["Request.Amount"]);
                 request.StatusId = requestForm["Request.StatusId"] != null ? Int32.Parse(requestForm["Request.StatusId"]) : 1;
-                request.User = authUser;
 
                 db.Entry(request).State = EntityState.Modified;
 
-                //var addFile = false;
+                var addFile = false;
 
+                if (attachment == null)
+                {
+                    addFile = true;
+                }
 
-                //if (attachment == null)
-                //{
-                //    addFile = true;
-                //}
+                bool fileIsTooLarge = false;
+                bool fileExtensionInvalid = false;
 
-                //if (upload != null && upload.ContentLength > 0)
-                //{
-                //    if (addFile)
-                //    {
-                //        AdsViewFile newAttachment = new AdsViewFile();
-                //        newAttachment.AdId = advert.Id;
-                //        newAttachment.Filename = Path.GetFileName(upload.FileName);
-                //        newAttachment.FileType = FileType.Avatar;
-                //        newAttachment.ContentType = upload.ContentType;
+                foreach (HttpPostedFileBase file in upload)
+                {
+                    //Checking file is available to save.  
+                    if (file != null)
+                    {
+                        var checkextension = new[] { Path.GetExtension(file.FileName).ToLower() };
 
-                //        attachment = newAttachment;
-                //    }
-                //    else
-                //    {
-                //        attachment.AdId = advert.Id;
-                //        attachment.Filename = Path.GetFileName(upload.FileName);
-                //        attachment.FileType = FileType.Avatar;
-                //        attachment.ContentType = upload.ContentType;
-                //    }
+                        var allowedFileExtentions = new AllowedFileExtensionsHelper();
+                        var maximumAttachmentSize = new AllowedFileSizeHelper();
 
+                        if (!allowedFileExtentions.FileExtentionAllowed(checkextension))
+                        {
+                            fileExtensionInvalid = true;
+                            uploadedFileMessage = "Only PDF documents and images (.jpg | .jpeg | .png) may be uploaded.";
+                            uploadedFileFailure = true;
+                        }
 
-                //    string[] allowedExtentions = GetAllowedExtension();
+                        if (maximumAttachmentSize.AllowedFileSize(upload.Count(), file.ContentLength))
+                        {
+                            fileIsTooLarge = true;
+                            uploadedFileMessage = "A single attachment cannot exceed than 3MB and the total attachment size cannot exceed 15MB.";
+                            uploadedFileFailure = true;
+                        }
 
-                //    foreach (var extention in allowedExtentions)
-                //    {
-                //        if (attachment.ContentType.Contains(extention.ToLower()))
-                //        {
-                //            try
-                //            {
-                //                using (var reader = new BinaryReader(upload.InputStream))
-                //                {
-                //                    attachment.Content = reader.ReadBytes(upload.ContentLength);
+                        if ((!fileExtensionInvalid) && (!fileIsTooLarge))
+                        {
+                            try
+                            {
+                                attachment.RequestId = id;
+                                attachment.File = Path.GetFileName(file.FileName);
+                                attachment.ContentType = file.ContentType;
 
-                //                    if (addFile)
-                //                    {
-                //                        db.Attachment.Add(attachment);
-                //                    }
-                //                    else
-                //                    {
+                                using (var reader = new BinaryReader(file.InputStream))
+                                {
+                                    attachment.Content = reader.ReadBytes(file.ContentLength);
 
-                //                        db.Entry(attachment).State = EntityState.Modified;
-                //                    }
-
-                //                }
-
-                //                break;
-                //            }
-                //            catch (Exception ex)
-                //            {
-                //                uploadedFileFailure = true;
-                //            }
-                //        }
-                //    }
-                //}
+                                    db.Attachment.Add(attachment);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                uploadedFileMessage = ex.Message.ToString();
+                                uploadedFileFailure = true;
+                            }
+                        }
+                    }
+                }
 
                 try
                 {
                     db.SaveChanges();
-                    return RedirectToAction(nameof(MyRequests));
+                    return RedirectToAction(nameof(EditConfirmation), new { message = uploadedFileMessage, uploadedFile = uploadedFileFailure });
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -282,6 +266,25 @@ namespace FinanceRequest.Controllers
                     db.SaveChanges();
                 }
             }
+
+            return View();
+        }
+
+        public ActionResult EditConfirmation(string fileMessage, bool uploadedFile = false)
+        {
+            StringBuilder message = new StringBuilder();
+            message.AppendLine("Your request has been updated successfully.");
+
+            if (uploadedFile)
+            {
+                message.AppendLine("Note that an error occurred when you attempted to upload your supporting documentation.  " + fileMessage + " Please edit your request and upload the file in its correct format.");
+            }
+            else
+            {
+                message.AppendLine(fileMessage);
+            }
+
+            ViewBag.Message = message;
 
             return View();
         }
