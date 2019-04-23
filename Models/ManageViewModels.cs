@@ -75,6 +75,7 @@ namespace FinanceRequest.Models
         [DataType(DataType.Currency)]
         public decimal Amount { get; set; }
 
+        [Display(Name = "Status")]
         public int StatusId { get; set; }
         [ForeignKey(nameof(StatusId))]
         public virtual StatusModel Status { get; set; }
